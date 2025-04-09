@@ -6,13 +6,15 @@ import java.util.Map;
 import static utils.Constants.*;
 
 public class RoundResolver {
-    private static final Map<Character, Map<Character, Integer>> scoring_map;
-    static {
+    public enum Part{ PART_1, PART_2 }
+    private final Map<Character, Map<Character, Integer>> scoring_map;
+
+    public RoundResolver(Part puzzle_part){
         // Define the sub-mappings for round outcomes
         Map<Character, Integer> rock = new HashMap<>();
-        rock.put('X', ROCK + DRAW);
-        rock.put('Y', PAPER + WIN);
-        rock.put('Z', SCISSORS + LOSE);
+        rock.put('X', puzzle_part == Part.PART_1 ? ROCK + DRAW : LOSE + SCISSORS);
+        rock.put('Y', puzzle_part == Part.PART_1 ? PAPER + WIN : DRAW + ROCK);
+        rock.put('Z', puzzle_part == Part.PART_1 ? SCISSORS + LOSE : WIN + PAPER);
 
         Map<Character, Integer> paper = new HashMap<>();
         paper.put('X', ROCK + LOSE);
@@ -20,9 +22,9 @@ public class RoundResolver {
         paper.put('Z', SCISSORS + WIN);
 
         Map<Character, Integer> scissors = new HashMap<>();
-        scissors.put('X', ROCK + WIN);
-        scissors.put('Y', PAPER + LOSE);
-        scissors.put('Z', SCISSORS + DRAW);
+        scissors.put('X', puzzle_part == Part.PART_1 ? ROCK + WIN : LOSE + PAPER);
+        scissors.put('Y', puzzle_part == Part.PART_1 ? PAPER + LOSE : DRAW + SCISSORS);
+        scissors.put('Z', puzzle_part == Part.PART_1 ? SCISSORS + DRAW : WIN + ROCK);
 
         // Build the nested hashmap
         scoring_map = new HashMap<>();
@@ -31,7 +33,7 @@ public class RoundResolver {
         scoring_map.put('C', scissors);
     }
 
-    public static int getScore(String round) {
+    public int getScore(String round) {
         // Read in round moves
         if (round.length() != 3)
             throw new IllegalArgumentException("Rounds must only be 3 characters long. Round provided: " + round);
