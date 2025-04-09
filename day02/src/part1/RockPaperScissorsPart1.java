@@ -17,10 +17,13 @@ public class RockPaperScissorsPart1 {
         // Assumes the working directory is this day's module
         Path input_file_path = Path.of("./" + args[0]);
 
+        // Initialize the Round Resolver
+        RoundResolver resolver = new RoundResolver(RoundResolver.Part.PART_1);
+
         // Each round should be resolved according to some scoring rule
         try (Stream<String> rounds = Files.lines(input_file_path)) {
             int total_score = rounds
-                    .mapToInt(RoundResolver::getScore)
+                    .mapToInt(resolver::getScore)
                     .sum();
 
             System.out.println(total_score);
