@@ -1,16 +1,14 @@
 package day04.solution;
 
+import day04.utils.CleanupRanges;
 import enums.Part;
 import interfaces.AOCSolution;
-import utils.ListUtils;
-import utils.StringUtils;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static java.lang.System.Logger.Level.WARNING;
@@ -24,15 +22,7 @@ public class CampCleanup implements AOCSolution {
                     .map(sections -> Arrays.stream(sections)
                             .mapToInt(Integer::parseInt)
                             .toArray())
-                    .mapToInt(sections -> {
-                        // Range 1 contained within Range 2
-                        if (sections[0] >= sections[2] && sections[1] <= sections[3])
-                            return 1;
-                        // Range 2 contained within Range 1
-                        if (sections[2] >= sections[0] && sections[3] <= sections[1])
-                            return 1;
-                        return 0;
-                    })
+                    .mapToInt(sections -> CleanupRanges.doOverlap(sections, puzzle_part) ? 1 : 0)
                     .sum();
 
             return String.valueOf(num_full_overlaps);
