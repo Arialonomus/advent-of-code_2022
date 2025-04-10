@@ -1,12 +1,12 @@
-package utils;
+package day02.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.Constants.*;
+import static day02.utils.Constants.*;
+import enums.Part;
 
 public class RoundResolver {
-    public enum Part{ PART_1, PART_2 }
     private final Map<Character, Map<Character, Integer>> scoring_map;
 
     public RoundResolver(Part puzzle_part){
