@@ -7,4 +7,5 @@ module solutions {
     exports day01.solution;
     exports day02.solution;
     exports day03.solution;
+    exports day04.solution;
 }
