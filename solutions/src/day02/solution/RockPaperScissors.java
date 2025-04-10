@@ -1,6 +1,8 @@
-package part2;
+package day02.solution;
 
-import utils.RoundResolver;
+import day02.utils.RoundResolver;
+import enums.Part;
+import interfaces.AOCSolution;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -10,28 +12,23 @@ import java.util.stream.Stream;
 
 import static java.lang.System.Logger.Level.WARNING;
 
-public class RockPaperScissors {
-    public static void main(String[] args) {
-        System.Logger logger = System.getLogger(RockPaperScissors.class.getName());
-
-        // Assumes the working directory is this day's module
-        Path input_file_path = Path.of("./" + args[0]);
-
+public class RockPaperScissors implements AOCSolution {
+    public String solve(Part puzzle_part, Path input_file_path, System.Logger logger) {
         // Initialize the Round Resolver
-        RoundResolver resolver = new RoundResolver(RoundResolver.Part.PART_2);
+        RoundResolver resolver = new RoundResolver(puzzle_part);
 
         // Each round should be resolved according to some scoring rule
         try (Stream<String> rounds = Files.lines(input_file_path)) {
-            int total_score = rounds
+            return String.valueOf(rounds
                     .mapToInt(resolver::getScore)
-                    .sum();
-
-            System.out.println(total_score);
+                    .sum());
         }
         catch (IOException | UncheckedIOException e) {  // Streams may throw UncheckedIOExceptions while fetching
             logger.log(WARNING, "Error reading input file ", input_file_path, e);
         } catch (IllegalArgumentException e) {
             logger.log(WARNING, "Invalid input file format ", input_file_path, e);
         }
+
+        return "ERROR";
     }
 }
