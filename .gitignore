@@ -30,5 +30,5 @@ bin/
 .DS_Store
 
 ### Advent of Code files ###
-input*
+input-day??
 output*
