@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import static java.lang.System.Logger.Level.WARNING;
 
 public class CalorieCounting implements AOCSolution {
+    @Override
     public String solve(Part puzzle_part, Path input_file_path, System.Logger logger) {
         // Calories carried by each elf are delimited by blank lines
         try (Stream<String> groups = Stream.of(Files.readString(input_file_path).split("\\n\\n"))) {

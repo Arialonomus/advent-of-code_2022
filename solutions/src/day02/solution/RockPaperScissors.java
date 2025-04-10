@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import static java.lang.System.Logger.Level.WARNING;
 
 public class RockPaperScissors implements AOCSolution {
+    @Override
     public String solve(Part puzzle_part, Path input_file_path, System.Logger logger) {
         // Initialize the Round Resolver
         RoundResolver resolver = new RoundResolver(puzzle_part);
