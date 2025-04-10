@@ -1,6 +1,7 @@
 module solutions {
     exports interfaces;
     exports enums;
+    exports utils;
 
     // Puzzle Solutions
     exports day01.solution;
