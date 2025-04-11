@@ -22,7 +22,7 @@ public class SupplyStacks implements AOCSolution {
             // Populate the content of the stacks
             int num_stacks = input.get(div_index - 1).trim().split("\\s+").length;
             List<String> stacks_input = input.subList(0, div_index - 1);
-            CrateStacks stacks = new CrateStacks(num_stacks, stacks_input);
+            CrateStacks stacks = new CrateStacks(num_stacks, stacks_input, puzzle_part);
 
             // Parse the moves into arrays of integers
             List<int[]> instructions = input.subList(div_index + 1, input.size()).stream()

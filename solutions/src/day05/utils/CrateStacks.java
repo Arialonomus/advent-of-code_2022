@@ -1,14 +1,18 @@
 package day05.utils;
 
+import enums.Part;
+
 import java.util.List;
 
 public class CrateStacks {
-    private final StringBuilder[] stacks;
+    private final StringBuilder[] m_stacks;
+    private Part puzzle_part;
 
-    public CrateStacks(int num_stacks, List<String> input) {
-        stacks = new StringBuilder[num_stacks];
+    public CrateStacks(int num_stacks, List<String> input, Part part) {
+        puzzle_part = part;
+        m_stacks = new StringBuilder[num_stacks];
         for (int i = 0; i < num_stacks; i++) {
-            stacks[i] = new StringBuilder();
+            m_stacks[i] = new StringBuilder();
         }
 
         // Populate the stacks from input
@@ -17,7 +21,7 @@ public class CrateStacks {
             for (int j = 1; j < input.get(i).length(); j += 4) {
                 char c = input.get(i).charAt(j);
                 if (c != ' ') {
-                    stacks[stack_index].append(c);
+                    m_stacks[stack_index].append(c);
                 }
                 stack_index++;
             }
@@ -32,12 +36,12 @@ public class CrateStacks {
      */
     public void moveCrates(int num_crates, int from_ID, int to_ID) {
         // Get the substring representing the stack of crates to be moved
-        StringBuilder from_stack = stacks[from_ID - 1];
+        StringBuilder from_stack = m_stacks[from_ID - 1];
         int stack_move_index = from_stack.length() - num_crates;
         StringBuilder crates = new StringBuilder(from_stack.substring(stack_move_index));
 
         // Append in reverse to simulate crates being moved one at a time
-        StringBuilder to_stack = stacks[to_ID - 1];
+        StringBuilder to_stack = m_stacks[to_ID - 1];
         to_stack.append(crates.reverse());
 
         // Trim the characters from the source stack to represent the crates being removed
@@ -50,7 +54,7 @@ public class CrateStacks {
      */
     public String getTopCrates() {
         StringBuilder top_crates = new StringBuilder();
-        for (StringBuilder stack : stacks) {
+        for (StringBuilder stack : m_stacks) {
             top_crates.append(stack.charAt(stack.length() - 1));
         }
         return top_crates.toString();
