@@ -42,9 +42,9 @@ public class AOCSolutionLauncher {
                 if (input_file.toString().contains("test")) {
                     Matcher matcher = Pattern.compile("test(.{1,2})$").matcher(input_file.toString());
                     String test_num = matcher.find() ? matcher.group(1) : null;
-                    System.out.printf("%s, Test %s Solution: %s", puzzle_header, test_num, result);
+                    System.out.printf("%s, Test %s Solution: %s\n", puzzle_header, test_num, result);
                 } else {
-                    System.out.printf("%s Solution: %s", puzzle_header, result);
+                    System.out.printf("%s Solution: %s\n", puzzle_header, result);
                 }
             }
 
