@@ -1,4 +1,4 @@
-package flags;
+package args;
 
 import java.nio.file.Path;
 import java.util.List;

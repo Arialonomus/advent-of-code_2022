@@ -1,8 +1,8 @@
 package program;
 
 import enums.Part;
-import flags.ArgParser;
-import flags.LauncherArgs;
+import args.ArgParser;
+import args.LauncherArgs;
 import interfaces.AOCSolution;
 
 import java.io.IOException;

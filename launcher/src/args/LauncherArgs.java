@@ -1,4 +1,4 @@
-package flags;
+package args;
 
 import enums.Part;
 
