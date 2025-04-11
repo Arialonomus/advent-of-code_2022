@@ -39,6 +39,6 @@ public class RucksackReorganization implements AOCSolution {
             logger.log(WARNING, "Error reading input file ", input_file_path, e);
         }
 
-        return "";
+        return "ERROR";
     }
 }
