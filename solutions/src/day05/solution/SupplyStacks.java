@@ -32,7 +32,13 @@ public class SupplyStacks implements AOCSolution {
                             .toArray())
                     .toList();
 
-        } catch (IOException e) {
+            // Move the crates according to the instructions and return final state
+            for (int[] instruction : instructions) {
+                stacks.moveCrates(instruction[0], instruction[1], instruction[2]);
+            }
+            return stacks.getTopCrates();
+        }
+        catch (IOException e) {
             logger.log(WARNING, "Error reading input file ", input_file_path, e);
         }
 
