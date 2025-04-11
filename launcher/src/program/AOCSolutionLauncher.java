@@ -4,19 +4,16 @@ import enums.Part;
 import args.ArgParser;
 import args.LauncherArgs;
 import interfaces.AOCSolution;
+import load.SolutionLoader;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.lang.System.Logger.Level.WARNING;
+import static load.FilepathConstants.COMPILED_SOLUTIONS_MODULE_DIR;
 
 public class AOCSolutionLauncher {
     public static void main(String[] args) {
@@ -28,26 +25,11 @@ public class AOCSolutionLauncher {
             LauncherArgs loader_args = ArgParser.parse(args);
 
             // Locate the class file for the puzzle solution
-            Path solution_dir = Path.of("out/production/solutions/" + loader_args.puzzle_day() + "/solution/");
-            Path solution_class_path = Files.list(solution_dir)
-                    .filter(p -> p.toString().endsWith(".class"))
-                    .findFirst()
-                    .orElseThrow(() -> new IOException("No solution class file found"));
-            String solution_class_name = solution_class_path.toString()
-                    .replace("out/production/solutions/", "")
-                    .replace(FileSystems.getDefault().getSeparator(), ".")
-                    .replace(".class", "");
-
-            // Load the solution class
-            Path working_dir = Path.of(System.getProperty("user.dir")).toAbsolutePath();
-            URL[] urls = { URI.create("file://" + working_dir + "/" + solution_dir).toURL() };
-            URLClassLoader loader = new URLClassLoader(urls);
-            Class<?> solution_class = Class.forName(solution_class_name, true, loader);
-            if (!AOCSolution.class.isAssignableFrom(solution_class))
-                throw new IllegalArgumentException("Class " + solution_class_name + " is not a solution class");
+            Path solution_dir = Path.of(COMPILED_SOLUTIONS_MODULE_DIR + loader_args.puzzle_day() + "/solution/");
+            String solution_class_name = SolutionLoader.getSolutionClassName(solution_dir);
 
             // Instantiate and run the solution
-            AOCSolution solution = (AOCSolution) solution_class.getDeclaredConstructor().newInstance();
+            AOCSolution solution = SolutionLoader.load(solution_dir, solution_class_name);
             String result = solution.solve(loader_args.puzzle_part(), loader_args.input_file_path(), logger);
 
             // Output result
