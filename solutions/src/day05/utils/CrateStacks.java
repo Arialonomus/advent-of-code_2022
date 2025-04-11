@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CrateStacks {
     private final StringBuilder[] m_stacks;
-    private Part puzzle_part;
+    private final Part puzzle_part;
 
     public CrateStacks(int num_stacks, List<String> input, Part part) {
         puzzle_part = part;
@@ -29,7 +29,7 @@ public class CrateStacks {
     }
 
     /**
-     * Simulates moving crates one at a time from one stack to another, updating the class state
+     * Simulates moving crates from one stack to another, updating the class state
      * @param num_crates the number of crates to be moved
      * @param from_ID the ID number (ID = index + 1) of the stack to be moved from
      * @param to_ID the ID number (ID = index + 1) of the stack to be moved to
@@ -40,9 +40,14 @@ public class CrateStacks {
         int stack_move_index = from_stack.length() - num_crates;
         StringBuilder crates = new StringBuilder(from_stack.substring(stack_move_index));
 
-        // Append in reverse to simulate crates being moved one at a time
+        // Add the moved crates to the new stack
         StringBuilder to_stack = m_stacks[to_ID - 1];
-        to_stack.append(crates.reverse());
+        if (puzzle_part == Part.PART_1)
+            // Part 1: Append in reverse to simulate crates being moved one at a time
+            to_stack.append(crates.reverse());
+        else
+            // Part 2: Move crates as a unit
+            to_stack.append(crates);
 
         // Trim the characters from the source stack to represent the crates being removed
         from_stack.delete(stack_move_index, from_stack.length());
