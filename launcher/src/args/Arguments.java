@@ -113,8 +113,9 @@ public class Arguments {
         try(Stream<Path> input_files = Files.list(Path.of(INPUT_DIR))) {
             List<Path> test_files = input_files
                     .map(Path::toString)
-                    .filter(str -> str.contains(getDayXXString(day) + "test"))
+                    .filter(str -> str.contains(getDayXXString(day) + "-test"))
                     .map(Path::of)
+                    .sorted()
                     .toList();
 
             // Handle non-existent test input request
