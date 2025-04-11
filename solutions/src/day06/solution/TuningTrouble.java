@@ -16,12 +16,13 @@ public class TuningTrouble implements AOCSolution {
     public String solve(Part puzzle_part, Path input_file_path, System.Logger logger) {
         try {
             CharSequence characters = Files.readString(input_file_path);
-            int marker_end = 3;
+            int marker_len = puzzle_part == Part.PART_1 ? 4 : 14;
+            int marker_end = marker_len - 1;  // Minus 1 since loop increments on first iteration
             Set<Character> marker_characters = new HashSet<>(4);
-            while (marker_characters.size() < 4) {
+            while (marker_characters.size() < marker_len) {
                 marker_end++;
                 marker_characters.clear();
-                for (int i = marker_end - 4; i < marker_end; i++) {
+                for (int i = marker_end - marker_len; i < marker_end; i++) {
                     marker_characters.add(characters.charAt(i));
                 }
             }
