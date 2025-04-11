@@ -9,4 +9,5 @@ module solutions {
     exports day03.solution;
     exports day04.solution;
     exports day05.solution;
+    exports day06.solution;
 }
