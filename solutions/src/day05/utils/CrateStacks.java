@@ -43,4 +43,16 @@ public class CrateStacks {
         // Trim the characters from the source stack to represent the crates being removed
         from_stack.delete(stack_move_index, from_stack.length());
     }
+
+    /**
+     * Returns the state of the crate stacks, defined as the top crate of each stack
+     * @return a string showing the crate at the top of each stack from stack 1 to num_stacks
+     */
+    public String getTopCrates() {
+        StringBuilder top_crates = new StringBuilder();
+        for (StringBuilder stack : stacks) {
+            top_crates.append(stack.charAt(stack.length() - 1));
+        }
+        return top_crates.toString();
+    }
 }
