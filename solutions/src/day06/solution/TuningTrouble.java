@@ -17,9 +17,9 @@ public class TuningTrouble implements AOCSolution {
         try {
             CharSequence characters = Files.readString(input_file_path);
             int marker_len = puzzle_part == Part.PART_1 ? 4 : 14;
-            int marker_end = marker_len - 1;  // Minus 1 since loop increments on first iteration
 
             // Check for repeats until a match is found by adding characters to a set
+            int marker_end = marker_len - 1;  // Minus 1 since loop increments on first iteration
             Set<Character> marker_characters = new HashSet<>(marker_len);
             while (marker_characters.size() < marker_len) {
                 marker_end++;
