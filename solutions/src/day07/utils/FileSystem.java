@@ -1,12 +1,18 @@
 package day07.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
 public class FileSystem {
+    /* Constants */
+
+    private static final int SIZE_LIMIT = 100000;
+
     /* Data Members */
 
     private final Directory root = new Directory("/", null);
+    private final List<Directory> directories = new ArrayList<>(List.of(root));
 
     /* Constructor */
 
@@ -22,6 +28,21 @@ public class FileSystem {
             else
                 ls(iter, current_dir);
         }
+    }
+
+    /**
+     * Traverses the filesystem and calculates the total size of all deletable directories, i.e.
+     * directories whose size is <= SIZE_LIMIT
+     * @return the sum of the sizes of the deletable directories
+     */
+    public int getTotalDeletableDirectoriesSize() {
+        int sum = 0;
+        for (Directory dir : directories) {
+            if (dir.getSize() <= SIZE_LIMIT) {
+                sum += dir.getSize();
+            }
+        }
+        return sum;
     }
 
     /* Helper Methods */
@@ -55,7 +76,9 @@ public class FileSystem {
                 terminal_iter.previous();
                 return;
             } else if (line.startsWith("dir")) {
-                current_dir.addDirectory(line.substring(4));
+                String new_dir_name = line.substring(4);
+                current_dir.addDirectory(new_dir_name);
+                directories.add((Directory) current_dir.children.get(new_dir_name));
             } else {
                 String[] file_desc = line.split(" ");
                 current_dir.addFile(file_desc[1], Integer.parseInt(file_desc[0]));
