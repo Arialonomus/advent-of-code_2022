@@ -7,7 +7,9 @@ import java.util.ListIterator;
 public class FileSystem {
     /* Constants */
 
-    private static final int SIZE_LIMIT = 100000;
+    private static final int DELETABLE_SIZE_LIMIT = 100000;
+    private static final int TOTAL_DISK_SPACE = 70000000;
+    private static final int UNUSED_SPACE_REQUIREMENT = 30000000;
 
     /* Data Members */
 
@@ -31,18 +33,36 @@ public class FileSystem {
     }
 
     /**
-     * Traverses the filesystem and calculates the total size of all deletable directories, i.e.
+     * Traverses the list of directories and calculates the total size of all deletable directories, i.e.
      * directories whose size is <= SIZE_LIMIT
      * @return the sum of the sizes of the deletable directories
      */
     public int getTotalDeletableDirectoriesSize() {
         int sum = 0;
         for (Directory dir : directories) {
-            if (dir.getSize() <= SIZE_LIMIT) {
+            if (dir.getSize() <= DELETABLE_SIZE_LIMIT) {
                 sum += dir.getSize();
             }
         }
         return sum;
+    }
+
+    /**
+     * Traverses the list of directories to find the eligible directory to delete to free up
+     * the appropriate amount of space, then returns the size of that directory
+     * @return the size of the directory to be deleted
+     */
+    public int deletedDirectorySize() {
+        int current_unused_space = TOTAL_DISK_SPACE - root.getSize();
+        int disk_space_needed = UNUSED_SPACE_REQUIREMENT - current_unused_space;
+        int deleted_directory_size = UNUSED_SPACE_REQUIREMENT; // We need some large number for the first size comparison
+        for (Directory dir : directories) {
+            int dir_size = dir.getSize();
+            if (dir_size >= disk_space_needed && dir_size <= deleted_directory_size) {
+                deleted_directory_size = dir_size;
+            }
+        }
+        return deleted_directory_size;
     }
 
     /* Helper Methods */
