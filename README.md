@@ -10,13 +10,13 @@ The second sub-module is the is the ```launcher``` module. This is a simple dyna
 
 ### Running the Program
 
-The program is designed to be run out of the box and can be started from the command line. The launcher requires 2 flags and allows for one optional flag, all prefaced with ```-```, as follows:
+The program is designed to be run out of the box and can be started from the command line. The launcher requires 1 flag and allows for 2 optional flag, all case-insensitive and prefaced with ```-```, as follows:
 
 **Required Flags**
-- ```d=``` - Indicates which day's puzzle solution you would like to run. Accepts numbers 1-25, with or without a leading zero for single digits.
-- ```p=``` - Indicates which part of the puzzle you are solving. Accepts 1 or 2, with or without a leading zero.
+- ```-d=``` - Indicates which day's puzzle solution you would like to run. Accepts numbers 1-25, with or without a leading zero for single digits.
 
 **Optional Flags**
-- ```t``` - Indicates that you would like to provide the test input for that day's solution. If there is more than one test input available, an ```=XX``` can be provided to specify which input to run, otherwise the first test input will be selected.
+- ```-p=``` - Indicates which part of the puzzle you are solving. Accepts 1 or 2, with or without a leading zero. If not provided the solution defaults to Part 1.
+- ```-t``` - Indicates that you would like to provide the test input for that day's solution. If there is more than one test input available, the suffix ```=XX``` can be provided to specify which input to run, otherwise the first test input will be selected. Further, the suffix ```=all``` can be used to run all test inputs at once.
 
 For example, in order to run the test input for Day 3's puzzle "Rucksack Reorganization" Part 1, you would enter the following command (assuming the root directory) ```java out.production.launcher.program.AOCSolutionLauncher -d=3 -p=2 -t```
