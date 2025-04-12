@@ -49,13 +49,13 @@ public class AOCSolutionLauncher {
             }
 
         } catch (IllegalArgumentException e) {
-            logger.log(WARNING, "Error parsing solver arguments: ", e);
+            logger.log(WARNING, "Error parsing solver arguments:", e);
         } catch (MalformedURLException e) {
-            logger.log(WARNING, "Error locating solution class directory: ", e);
+            logger.log(WARNING, "Error locating solution class directory:", e);
         } catch (IOException | UncheckedIOException | ClassNotFoundException e) {
-            logger.log(WARNING, "Error locating solution class file: ", e);
+            logger.log(WARNING, "Error locating solution class file:", e);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            logger.log(WARNING, "Error instantiating solution class file: ", e);
+            logger.log(WARNING, "Error instantiating solution class file:", e);
         }
     }
 }

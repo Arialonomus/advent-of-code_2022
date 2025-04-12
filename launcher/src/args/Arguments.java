@@ -37,7 +37,6 @@ public class Arguments {
         if (parsed_args.containsKey('t')) {
             try { input_file_paths = getTestPaths(parsed_args.get('t'), puzzle_day); }
             catch (IOException e) { throw new IOException(e); }
-            catch (IllegalArgumentException e) { throw new IllegalArgumentException(e); }
         }
         else {
             input_file_paths = List.of(Path.of(INPUT_DIR + "input-" + getPuzzleDayString()));
@@ -83,7 +82,7 @@ public class Arguments {
         // There should only be one of each valid flag
         for (List<String> flag_list : filtered_args.values()) {
             if (flag_list.size() > 1)
-                throw new IllegalArgumentException("Please provide only one flag for each argument");
+                throw new IllegalArgumentException("Only one flag may be provided for each argument");
         }
 
         // Program args must at minimum contain a day flag
@@ -131,12 +130,14 @@ public class Arguments {
                 return test_files;
 
             // Return the test_num-th test file
-            return List.of(test_files.get(Integer.parseInt(test_num) - 1));
-
+            int test_num_index = Integer.parseInt(test_num) - 1;
+            if (test_num_index < test_files.size()) {
+                return List.of(test_files.get(Integer.parseInt(test_num) - 1));
+            } else {
+                throw new IllegalArgumentException("No test file for day " + day + " with number " + test_num);
+            }
         } catch (IOException e) {
             throw new IOException(e);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e);
         }
     }
 
@@ -148,5 +149,4 @@ public class Arguments {
     private static String getDayXXString(int day) {
         return day < 10 ? "day0" + day : "day" + day;
     }
-
 }
