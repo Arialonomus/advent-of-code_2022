@@ -17,7 +17,7 @@ public class TreetopTreeHouse implements AOCSolution {
         try {
             List<String> input_lines = Files.readAllLines(input_file_path);
             TreeHeightGrid tree_grid = new TreeHeightGrid(input_lines);
-            return String.valueOf(tree_grid.calculateNumVisible());
+            return String.valueOf(tree_grid.calculateNumExternallyVisible());
         }
         catch (IOException e) {
             logger.log(WARNING, "Error reading input file ", input_file_path, e);

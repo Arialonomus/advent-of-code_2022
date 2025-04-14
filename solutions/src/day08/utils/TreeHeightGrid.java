@@ -33,7 +33,7 @@ public class TreeHeightGrid {
      * enough to be seen from at least one grid edge
      * @return the total number of trees visible in this grid
      */
-    public int calculateNumVisible() {
+    public int calculateNumExternallyVisible() {
         // Generate a list of tree positions to test, excluding the border cells
         List<GridPosition> test_tree_positions = IntStream.range(1, height - 1)
                 .boxed()
