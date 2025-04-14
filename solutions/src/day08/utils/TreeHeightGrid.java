@@ -82,4 +82,20 @@ public class TreeHeightGrid {
 
         return 0;
     }
+
+    /**
+     * Calculates the number of trees in row that are visible from a starting tree of a given height
+     * @param height_list a list of heights in a row from a starting position to a grid edge
+     * @param blocking_height the height of starting tree from which the row is considered
+     * @return an int representing the number of trees visible from that starting tree
+     */
+    private static int countVisibleTrees(List<Integer> height_list, int blocking_height) {
+        // Find the first tree the same height or greater in the row, if present
+        int blocking_tree_index = IntStream.range(0, height_list.size())
+                .filter(i -> height_list.get(i) >= blocking_height)
+                .findFirst().orElse(-1);
+
+        // If no blocking tree is found, all trees are visible
+        return blocking_tree_index == -1 ? height_list.size() : 1 + blocking_tree_index;
+    }
 }
