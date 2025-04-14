@@ -41,7 +41,7 @@ public class AOCSolutionLauncher {
                         args.getPuzzleDay(), puzzle_name, args.getPuzzlePart());
                 if (input_file.toString().contains("test")) {
                     Matcher matcher = Pattern.compile("test(.{1,2})$").matcher(input_file.toString());
-                    String test_num = matcher.find() ? matcher.group(1) : null;
+                    String test_num = matcher.find() ? matcher.group(1) : "01";
                     System.out.printf("%s, Test %s Solution: %s\n", puzzle_header, test_num, result);
                 } else {
                     System.out.printf("%s Solution: %s\n", puzzle_header, result);
