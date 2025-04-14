@@ -32,6 +32,11 @@ public class RopeBridge implements AOCSolution {
                         return new KnotMove(dir, Integer.parseInt(pair[1]));
                     })
                     .toList();
+
+            KnottedRope rope = new KnottedRope();
+            for (KnotMove move : moves) {
+                rope.move(move.dir, move.distance);
+            }
         }
         catch (IOException e) {
             logger.log(WARNING, "Error reading input file ", input_file_path, e);
