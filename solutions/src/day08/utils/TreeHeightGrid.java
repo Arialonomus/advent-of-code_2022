@@ -28,6 +28,30 @@ public class TreeHeightGrid {
                 .toList();
     }
 
+    /**
+     * Calculates the number of visible trees in this grid, where a visible tree is defined as a tree tall
+     * enough to be seen from at least one grid edge
+     * @return the total number of trees visible in this grid
+     */
+    public int calculateNumVisible() {
+        // Generate a list of tree positions to test, excluding the border cells
+        List<GridPosition> test_tree_positions = IntStream.range(1, height - 1)
+                .boxed()
+                .flatMap(row -> IntStream.range(1, width - 1)
+                        .mapToObj(col -> new GridPosition(row, col)))
+                .toList();
+
+        // All border cells are visible, minus 4 to not double-count corners
+        int num_visible = (2 * width) + (2 * height) - 4;
+
+        // Each interior cell can be tested independently
+        num_visible += test_tree_positions.parallelStream()
+                .mapToInt(this::checkVisibility)
+                .sum();
+
+        return num_visible;
+    }
+
     /* Helper Methods */
 
     /**
