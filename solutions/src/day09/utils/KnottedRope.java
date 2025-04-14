@@ -66,4 +66,8 @@ public class KnottedRope {
             }
         }
     }
+
+    public int getNumVisitedPositions() {
+        return visited_positions.size();
+    }
 }

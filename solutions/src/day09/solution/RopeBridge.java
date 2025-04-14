@@ -37,6 +37,7 @@ public class RopeBridge implements AOCSolution {
             for (KnotMove move : moves) {
                 rope.move(move.dir, move.distance);
             }
+            return String.valueOf(rope.getNumVisitedPositions());
         }
         catch (IOException e) {
             logger.log(WARNING, "Error reading input file ", input_file_path, e);
