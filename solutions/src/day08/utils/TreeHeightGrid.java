@@ -65,19 +65,19 @@ public class TreeHeightGrid {
         int tree_height = grid.get(row).get(col);
 
         // Test from left edge
-        if (Collections.max(grid.get(row).subList(0, pos.col())) < tree_height)
+        if (Collections.max(grid.get(row).subList(0, col)) < tree_height)
             return 1;
 
         // Test from top edge
-        if (Collections.max(transposed_grid.get(col).subList(0, pos.row())) < tree_height)
+        if (Collections.max(transposed_grid.get(col).subList(0, row)) < tree_height)
             return 1;
 
         // Test from right edge
-        if (Collections.max(grid.get(row).subList(pos.col() + 1, width)) < tree_height)
+        if (Collections.max(grid.get(row).subList(col + 1, width)) < tree_height)
             return 1;
 
         // Test from bottom edge
-        if (Collections.max(transposed_grid.get(col).subList(pos.row() + 1, height)) < tree_height)
+        if (Collections.max(transposed_grid.get(col).subList(row + 1, height)) < tree_height)
             return 1;
 
         return 0;
