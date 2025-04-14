@@ -52,6 +52,23 @@ public class TreeHeightGrid {
         return num_visible;
     }
 
+    /**
+     * Calculates the highest scenic score for all trees in this tree grid
+     * @return an int representing the highest scenic score for all trees in this grid
+     */
+    public int calculateMaxScenicScore() {
+        // Generate a list of all tree positions
+        List<GridPosition> test_tree_positions = IntStream.range(0, height)
+                .boxed()
+                .flatMap(row -> IntStream.range(0, width)
+                        .mapToObj(col -> new GridPosition(row, col)))
+                .toList();
+
+        return test_tree_positions.parallelStream()
+                .mapToInt(this::calculateScenicScore)
+                .max().orElse(-1);  // -1 is an error value, should never be returned
+    }
+
     /* Helper Methods */
 
     /**
