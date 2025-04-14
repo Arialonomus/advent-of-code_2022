@@ -84,6 +84,39 @@ public class TreeHeightGrid {
     }
 
     /**
+     * Calculates the scenic score for a tree at a given position
+     * @param pos a GridPosition object representing the row and column index of the tree being tested
+     * @return an int representing the scenic score for that tree
+     */
+    private int calculateScenicScore(GridPosition pos) {
+        int row = pos.row();
+        int col = pos.col();
+        int tree_height = grid.get(row).get(col);
+
+        int left_score = 0; // Cells on an edge have a score of zero for that direction
+        if (col > 0) {
+            left_score = countVisibleTrees(grid.get(row).subList(0, col).reversed(), tree_height);
+        }
+
+        int right_score = 0;
+        if (col < width - 1) {
+            right_score = countVisibleTrees(grid.get(row).subList(col + 1, width), tree_height);
+        }
+
+        int up_score = 0;
+        if (row > 0) {
+            up_score = countVisibleTrees(transposed_grid.get(col).subList(0, row).reversed(), tree_height);
+        }
+
+        int down_score = 0;
+        if (row < height - 1) {
+            down_score = countVisibleTrees(transposed_grid.get(col).subList(row + 1, height), tree_height);
+        }
+
+        return left_score * right_score * up_score * down_score;
+    }
+
+    /**
      * Calculates the number of trees in row that are visible from a starting tree of a given height
      * @param height_list a list of heights in a row from a starting position to a grid edge
      * @param blocking_height the height of starting tree from which the row is considered
