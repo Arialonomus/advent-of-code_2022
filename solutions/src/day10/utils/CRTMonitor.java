@@ -1,6 +1,6 @@
 package day10.utils;
 
-public class ClockCircuit {
+public class CRTMonitor {
 
     /* Data Members */
 
