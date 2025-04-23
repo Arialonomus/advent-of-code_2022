@@ -43,21 +43,23 @@ public class KnottedRope {
      * any new positions visited by the tail knot are recorded in the object state
      */
     public void move(Direction direction, int distance) {
-        // Move the head knot
-        switch (direction) {
-            case UP -> head.y += distance;
-            case DOWN -> head.y -= distance;
-            case RIGHT -> head.x += distance;
-            case LEFT -> head.x -= distance;
-        }
+        for (int moves_remaining = distance; moves_remaining > 0; --moves_remaining) {
+            // Move the head knot
+            switch (direction) {
+                case UP -> ++head.y;
+                case DOWN -> --head.y;
+                case RIGHT -> ++head.x;
+                case LEFT -> --head.x;
+            }
 
-        // Update the position of each remaining knot in the rope
-        int i = 1;
-        boolean knot_moved = true;
-        while (i < num_knots && knot_moved) {
-            // Escape the loop early if any knot is determined to have not moved
-            knot_moved = moveKnot(knots[i], knots[i - 1]);
-            ++i;
+            // Update the position of each remaining knot in the rope
+            int i = 1;
+            boolean knot_moved = true;
+            while (i < num_knots && knot_moved) {
+                // Escape the loop early if any knot is determined to have not moved
+                knot_moved = moveKnot(knots[i], knots[i - 1]);
+                ++i;
+            }
         }
     }
 
@@ -75,28 +77,25 @@ public class KnottedRope {
         if (areTouching(follower_knot, leader_knot))
             return false;
 
-        // Update the knot position until
-        do {
-            if (follower_knot.x != leader_knot.x && follower_knot.y != leader_knot.y) {
-                // Move the knot diagonally towards the leader
-                follower_knot.x += follower_knot.x < leader_knot.x ? 1 : -1;
-                follower_knot.y += follower_knot.y < leader_knot.y ? 1 : -1;
-            } else if (follower_knot.x == leader_knot.x)
-                // Move the knot vertically towards the leader
-                follower_knot.y += follower_knot.y < leader_knot.y ? 1 : -1;
-            else
-                // Move the knot horizontally towards the leader
-                follower_knot.x += follower_knot.x < leader_knot.x ? 1 : -1;
+        if (follower_knot.x != leader_knot.x && follower_knot.y != leader_knot.y) {
+            // Move the knot diagonally towards the leader
+            follower_knot.x += follower_knot.x < leader_knot.x ? 1 : -1;
+            follower_knot.y += follower_knot.y < leader_knot.y ? 1 : -1;
+        } else if (follower_knot.x == leader_knot.x)
+            // Move the knot vertically towards the leader
+            follower_knot.y += follower_knot.y < leader_knot.y ? 1 : -1;
+        else
+            // Move the knot horizontally towards the leader
+            follower_knot.x += follower_knot.x < leader_knot.x ? 1 : -1;
 
-            // Store the tail position, if necessary
-            if (follower_knot == tail)
-                visited_positions.add(new KnotPosition(follower_knot.x, follower_knot.y));
-        } while (!areTouching(follower_knot, leader_knot));
+        // Store the tail position, if necessary
+        if (follower_knot == tail)
+            visited_positions.add(new KnotPosition(follower_knot.x, follower_knot.y));
 
         // Knot was moved so return true
         return true;
     }
-
+    
     private boolean areTouching(KnotPosition follower_knot, KnotPosition leader_knot) {
         return Math.abs(leader_knot.x - follower_knot.x) < 2 && Math.abs(leader_knot.y - follower_knot.y) < 2;
     }
