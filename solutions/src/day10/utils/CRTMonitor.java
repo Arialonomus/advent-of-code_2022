@@ -7,6 +7,9 @@ public class CRTMonitor {
     private int register_x = 1;
     private int clock_cycle = 1;
     private int signal_strength = 0;
+    private final int SCREEN_WIDTH = 40;
+    private final StringBuilder row_buffer = new StringBuilder(SCREEN_WIDTH);
+    private final StringBuilder monitor_buffer = new StringBuilder("\n");
 
     /* Instructions */
 
@@ -14,6 +17,7 @@ public class CRTMonitor {
      * Does nothing, incrementing the clock cycle and triggering a cycle check
      */
     public void noop() {
+        draw();
         incrementClock();
     }
 
@@ -22,7 +26,9 @@ public class CRTMonitor {
      * @param value the value added to register_x
      */
     public void addx(int value) {
+        draw();
         incrementClock();
+        draw();
         register_x += value;
         incrementClock();
     }
@@ -31,6 +37,10 @@ public class CRTMonitor {
 
     public int getSignalStrength() {
         return signal_strength;
+    }
+
+    public String displayMonitor() {
+        return monitor_buffer.toString();
     }
 
     /* Helper Methods */
@@ -53,5 +63,25 @@ public class CRTMonitor {
     private void incrementClock() {
         ++clock_cycle;
         checkCycle();
+    }
+
+    /**
+     * Checks if a row's horizontal position is covered by the sprite, and draws the result at the
+     * horizontal position of the current row
+     */
+    private void draw() {
+        int horizontal_position = (clock_cycle - 1) % SCREEN_WIDTH;
+
+        // Light up the screen position if it is covered by the sprite
+        if (horizontal_position >= register_x - 1 && horizontal_position <= register_x + 1)
+            row_buffer.append("#");
+        else
+            row_buffer.append(".");
+
+        // Start a new row buffer once the row has been drawn
+        if (clock_cycle % SCREEN_WIDTH == 0) {
+            monitor_buffer.append(row_buffer).append("\n");
+            row_buffer.setLength(0);
+        }
     }
 }

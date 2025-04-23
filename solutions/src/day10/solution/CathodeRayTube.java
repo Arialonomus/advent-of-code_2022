@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import static enums.Part.PART_1;
 import static java.lang.System.Logger.Level.WARNING;
 
 public class CathodeRayTube implements AOCSolution {
@@ -17,16 +18,19 @@ public class CathodeRayTube implements AOCSolution {
     public String solve(Part puzzle_part, Path input_file_path, System.Logger logger) {
         try {
             List<String> input_lines = Files.readAllLines(input_file_path);
-            CRTMonitor circuit = new CRTMonitor();
+            CRTMonitor monitor = new CRTMonitor();
 
             for (String line : input_lines) {
                 if (line.startsWith("noop"))
-                    circuit.noop();
+                    monitor.noop();
                 else
-                    circuit.addx(Integer.parseInt(line.substring(5)));
+                    monitor.addx(Integer.parseInt(line.substring(5)));
             }
 
-            return String.valueOf(circuit.getSignalStrength());
+            if (puzzle_part == PART_1)
+                return String.valueOf(monitor.getSignalStrength());
+            else
+                return monitor.displayMonitor();
         }
         catch (IOException e) {
             logger.log(WARNING, "Error reading input file ", input_file_path, e);
