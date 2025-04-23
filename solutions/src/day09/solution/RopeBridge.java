@@ -27,13 +27,15 @@ public class RopeBridge implements AOCSolution {
                             case "U" -> Direction.UP;
                             case "D" -> Direction.DOWN;
                             case "L" -> Direction.LEFT;
-                            default -> Direction.RIGHT;
+                            case "R" -> Direction.RIGHT;
+                            default -> throw new IllegalStateException("Unexpected direction value: " + pair[0]);
                         };
                         return new KnotMove(dir, Integer.parseInt(pair[1]));
                     })
                     .toList();
 
-            KnottedRope rope = new KnottedRope();
+            int num_knots = puzzle_part == PART_1 ? 2 : 10;
+            KnottedRope rope = new KnottedRope(num_knots);
             for (KnotMove move : moves) {
                 rope.move(move.dir, move.distance);
             }
