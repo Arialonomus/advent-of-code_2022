@@ -90,7 +90,7 @@ public class KnottedRope {
 
             // Store the tail position, if necessary
             if (follower_knot == tail)
-                storeTailPosition();
+                visited_positions.add(new KnotPosition(follower_knot.x, follower_knot.y));
         } while (!areTouching(follower_knot, leader_knot));
 
         // Knot was moved so return true
@@ -99,9 +99,5 @@ public class KnottedRope {
 
     private boolean areTouching(KnotPosition follower_knot, KnotPosition leader_knot) {
         return Math.abs(leader_knot.x - follower_knot.x) < 2 && Math.abs(leader_knot.y - follower_knot.y) < 2;
-    }
-
-    private void storeTailPosition() {
-        visited_positions.add(new KnotPosition(tail.x, tail.y));
     }
 }
