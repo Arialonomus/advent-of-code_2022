@@ -95,8 +95,14 @@ public class KnottedRope {
         // Knot was moved so return true
         return true;
     }
-    
-    private boolean areTouching(KnotPosition follower_knot, KnotPosition leader_knot) {
-        return Math.abs(leader_knot.x - follower_knot.x) < 2 && Math.abs(leader_knot.y - follower_knot.y) < 2;
+
+    /**
+     * Determines if two knot positions are adjacent orthogonally or diagonally
+     * @param knot_a the position of the first knot
+     * @param knot_b the position of the second knot
+     * @return true if the two knots are adjacent
+     */
+    private boolean areTouching(KnotPosition knot_a, KnotPosition knot_b) {
+        return Math.abs(knot_b.x - knot_a.x) < 2 && Math.abs(knot_b.y - knot_a.y) < 2;
     }
 }
